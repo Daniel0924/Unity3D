@@ -30,43 +30,6 @@ namespace Sample
 {
     public class DynamicImageTagetBehaviour : ImageTargetBehaviour
     {
-
-        public JsonData jsonData = null;
-       
-      
-        public string JsonInitial = @"
-            {
-               ""list"":
-               [
-                    {
-                        ""info"":""scatch,0.92"",
-                        ""cenx"":""0"",
-                        ""ceny"":""0"",
-                        ""width"":""0.2"",
-                        ""height"":""0.1"",
-                        ""class"":""1"",
-                    },
-                    {
-                        ""info"":""scatch,0.92"",
-                        ""cenx"":""0.2"",
-                        ""ceny"":""0.2"",
-                        ""width"":""0.2"",
-                        ""height"":""0.1"",
-                        ""class"":""2"",
-                    },
-                    {
-                        ""info"":""scatch,0.92"",
-                        ""cenx"":""-0.3"",
-                        ""ceny"":""-0.1"",
-                        ""width"":""0.1"",
-                        ""height"":""0.2"",
-                        ""class"":""3"",
-                    },
-
-               ]          
-            }
-        ";
-
       
         protected override void Awake()
         {
@@ -112,7 +75,6 @@ namespace Sample
                 txtObject.GetComponent<TextMesh>().text = (string)jdItems[i]["info"];
                 Vector3 v = new Vector3(c.cenx, 0, c.ceny - c.height / 2 - 0.01f);
                 txtObject.transform.position = v;
-                //txtObject.GetComponent<TextMesh>().color = Color.green;
 
                 if (imgClass == "1")
                     txtObject.GetComponent<TextMesh>().color = Color.red;
