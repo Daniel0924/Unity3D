@@ -29,14 +29,30 @@ namespace Sample
         private TargetOnTheFly ui;
         private WebCamTexture tex;
         public string deviceName;
-        private string encodePhoto; 
+        private string encodePhoto;
+        private string userName;
         void Awake()
         {
             ui = FindObjectOfType<TargetOnTheFly>();
             MarksDirectory = Application.persistentDataPath;
             Debug.Log("MarkPath:" + Application.persistentDataPath);
+            UnityMessageManager.Instance.OnRNMessage += onMessage;
+            //+=注册事件，-=解绑事件
         }
 
+        void onDestroy()//这个方法在最后离开场景时调用，在进入时重新绑定
+        {
+            UnityMessageManager.Instance.OnRNMessage -= onMessage;
+        }
+
+        void onMessage(MessageHandler message)
+        {
+            var data = message.getData<string>();
+            Debug.Log("onMessage:" + data);
+            userName = data;
+            message.send(new { CallbackTest = "I am Unity callback" });
+        }
+        
         public void StartTakePhoto()
         {
             
@@ -70,8 +86,9 @@ namespace Sample
             Dictionary<string, string> post = new Dictionary<string, string>();
            
             post.Add("encodePhoto",encodePhoto);
+            post.Add("userName",userName);
             string data = GetPost(post);
-            string url = "http://10.112.32.109:8088/api/drawBorder";
+            string url = "http://10.112.248.148:8088/api/drawBorder";
             string result = postWebRequest(url, data);
             
             JsonData jsonData = JsonMapper.ToObject(result);
@@ -107,7 +124,7 @@ namespace Sample
             
             post.Add("encodePhoto",encodePhoto);
             string postData = GetPost(post);
-            string url = "http://10.112.32.109:8088/api/drawBorder";
+            string url = "http://10.112.248.148:8088/api/drawBorder";
             string result = postWebRequest(url, postData);
         
             JsonData jsonData = JsonMapper.ToObject(result);
