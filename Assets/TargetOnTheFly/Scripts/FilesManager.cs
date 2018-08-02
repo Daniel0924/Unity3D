@@ -31,6 +31,9 @@ namespace Sample
         public string deviceName;
         private string encodePhoto;
         private string userName;
+
+        public static string photoReturnResult;
+        
         void Awake()
         {
             ui = FindObjectOfType<TargetOnTheFly>();
@@ -64,50 +67,13 @@ namespace Sample
             
         }
         
-        public IEnumerator getTexture()
-        {
-            
-            print("调用了getTexture方法");
-            
-            yield return new WaitForEndOfFrame();
-            Texture2D t = new Texture2D(400, 300);
-            t.ReadPixels(new Rect(Screen.width / 2 - 200, Screen.height / 2 - 50, 360, 300), 0, 0, false);
-            //距X左的距离        距Y屏上的距离
-            // t.ReadPixels(new Rect(220, 180, 200, 180), 0, 0, false);
-            t.Apply();
-            byte[] byt = t.EncodeToPNG();
-            File.WriteAllBytes(Application.dataPath + "/Photoes/" + Time.time + ".jpg", byt);
-
-            encodePhoto = Convert.ToBase64String(byt);
-            tex.Play();
-            
-            print("================begin to post photoes===================");
-            
-            Dictionary<string, string> post = new Dictionary<string, string>();
-           
-            post.Add("encodePhoto",encodePhoto);
-            post.Add("userName",userName);
-            string data = GetPost(post);
-            string url = "http://10.112.248.148:8088/api/drawBorder";
-            string result = postWebRequest(url, data);
-            
-            JsonData jsonData = JsonMapper.ToObject(result);
-            
-            DynamicImageTagetBehaviour ditb = new DynamicImageTagetBehaviour();
-            
-            ditb.drawTest(jsonData);
-            
-        }
-
         IEnumerator ImageCreate()
         {
             Debug.Log("调用了imageCreate 方法");
             isWriting = true;
             yield return new WaitForEndOfFrame();
 
-            //Texture2D photo = new Texture2D(Screen.width / 2, Screen.height / 2, TextureFormat.RGB24, false);
-            //photo.ReadPixels(new Rect(Screen.width / 4, Screen.height / 4, Screen.width / 2, Screen.height / 2), 0, 0, false);
-
+           
             Texture2D photo = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
             photo.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0, false);
             photo.Apply();
@@ -123,13 +89,13 @@ namespace Sample
             Dictionary<string, string> post = new Dictionary<string, string>();
             
             post.Add("encodePhoto",encodePhoto);
-            string postData = GetPost(post);
-            string url = "http://10.112.248.148:8088/api/drawBorder";
-            string result = postWebRequest(url, postData);
-        
-            JsonData jsonData = JsonMapper.ToObject(result);
+            post.Add("userName",userName);
             
-            Debug.Log(jsonData);
+            string postData = GetPost(post);
+            string url = "http://10.112.248.148:8080/api/drawBorder";
+            photoReturnResult = postWebRequest(url, postData);
+
+            Debug.Log(photoReturnResult);
             
             
             DestroyImmediate(photo);

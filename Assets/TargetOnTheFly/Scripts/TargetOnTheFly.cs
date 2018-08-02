@@ -14,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
-using CScript;
 using LitJson;
 
 
@@ -68,14 +67,7 @@ namespace Sample
                     StartCoroutine(showMessage());
                 StartShowMessage = false;
             }
-
-            //GUI.Box(new Rect(Screen.width / 2 - 250, 30, 500, 60), "The box area will be used as ImageTarget. Take photo!", skin.GetStyle("Box"));
-            //GUI.Box(new Rect(Screen.width / 4, Screen.height / 4, Screen.width / 2, Screen.height / 2), "", skin.GetStyle("Box"));
-
-            //Debug.Log("Input.touchCount:" + Input.touchCount);
-
-            //if (GUI.Button(new Rect(Screen.width - 160, Screen.height - 85, 150, 80), "Clear Targets", skin.GetStyle("Button")))
-            if(GUI.Button(new Rect(Screen.width / 2 - 80, Screen.height - 85, 160, 80), "Clear Targets", skin.GetStyle("Button")))
+        if(GUI.Button(new Rect(Screen.width / 2 - 80, Screen.height - 85, 160, 80), "Clear Targets", skin.GetStyle("Button")))
             {
                 message = "Photo Clearedddd";
                 imageCreater.ClearTexture();
@@ -84,16 +76,6 @@ namespace Sample
             }
 
 
-            /**
-            if (GUI.Button(new Rect(10, 70, 100, 40), "start"))
-            {
-                message = "photo catch";
-
-                StartCoroutine(imageCreater.getTexture());
-                //imageCreater.getTexture();
-                
-            }
-            **/
                 
                
             if (Input.anyKeyDown && !isClear)
@@ -107,12 +89,6 @@ namespace Sample
 
             if (isShowing)
                 GUI.Box(new Rect(Screen.width / 2 - 65, Screen.height / 2, 135, 60), message, skin.GetStyle("Box"));
-
-
-            //if (GUI.Button(new Rect(Screen.width / 2 - 80, Screen.height - 85, 160, 80), "Take Photo", skin.GetStyle("Button")))
-            //imageCreater.StartTakePhoto();
-            //GUI.Button(new Rect(Screen.width / 2 - 80, Screen.height - 85, 160, 80), "Take Photo", skin.GetStyle("Button"));
-
 
         }
 
