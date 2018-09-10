@@ -45,7 +45,7 @@ namespace Sample
 
             for (int i = 0; i < jdItems.Count; i++)
             {
-                Debug.Log("444:" + jdItems[i]["info"]);
+                Debug.Log("444:" + jdItems[i]["score"]);
                 GameObject subGameObject = Instantiate(Resources.Load("kuang", typeof(GameObject))) as GameObject;
                 subGameObject.transform.parent = transform;
 
@@ -56,28 +56,38 @@ namespace Sample
                 c.width = float.Parse((string) jdItems[i]["width"]);
                 c.height = float.Parse((string) jdItems[i]["height"]);
 
+
                 string imgClass = (string) jdItems[i]["class"];
-                if (imgClass == "1")
+                if (imgClass == "Crack")
                     c.mat = (Material) Resources.Load("red");
-                if (imgClass == "2")
+                if (imgClass == "perforation")
                     c.mat = (Material) Resources.Load("yellow");
-                if (imgClass == "3")
+                if (imgClass == "Injury around rivets")
                     c.mat = (Material) Resources.Load("green");
+                if (imgClass == "Scratch")
+                    c.mat = (Material) Resources.Load("black");
+                if (imgClass == "Flake off")
+                    c.mat = (Material) Resources.Load("blue");
 
                 GameObject txtObject = Instantiate(Resources.Load("kuangtxt", typeof(GameObject))) as GameObject;
                 txtObject.transform.parent = transform;
-                txtObject.GetComponent<TextMesh>().text = (string) jdItems[i]["info"];
+                txtObject.GetComponent<TextMesh>().text = (string) jdItems[i]["class"] + "/" +(string) jdItems[i]["score"];
                 Vector3 v = new Vector3(c.cenx, 0, c.ceny - c.height / 2 - 0.01f);
                 txtObject.transform.position = v;
 
-                if (imgClass == "1")
+                if (imgClass == "Crack")
                     txtObject.GetComponent<TextMesh>().color = Color.red;
-                if (imgClass == "2")
+                if (imgClass == "perforation")
                     txtObject.GetComponent<TextMesh>().color = Color.yellow;
                 ;
-                if (imgClass == "3")
+                if (imgClass == "Injury around rivets")
                     txtObject.GetComponent<TextMesh>().color = Color.green;
                 ;
+                if (imgClass == "Scratch")
+                    txtObject.GetComponent<TextMesh>().color = Color.black;
+                
+                if (imgClass == "Flake off")
+                    txtObject.GetComponent<TextMesh>().color = Color.blue;
 
             }
 
