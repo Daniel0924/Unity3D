@@ -89,10 +89,13 @@ namespace Sample
             Dictionary<string, string> post = new Dictionary<string, string>();
             
             post.Add("encodePhoto",encodePhoto);
-            post.Add("userName",userName);
+            //post.Add("userName",userName);
             
             string postData = GetPost(post);
-            string url = "http://10.112.248.148:8080/api/drawBorder";
+           //string url = "http://10.112.24.79:8080/testplatform/api/drawBorder";//服务器url
+           string url = "http://boeing.vicp.net:80/testplatform/api/drawBorder";//服务器映射url
+          // string url = "http://10.112.32.109:8088/api/drawBorder";
+           // string url = "http://10.112.248.148:8088/api/drawBorder";
             photoReturnResult = postWebRequest(url, postData);
 
             Debug.Log(photoReturnResult);
